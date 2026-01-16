@@ -1,0 +1,93 @@
+print("Nama  : MARGARETHA FUTRI IRWAN")
+print("Nim   : 312510337")
+print("Kelas : TI.25 C5")
+
+class Node: 
+    def __init__(self, data): 
+        self.data = data 
+        self.left = None 
+        self.right = None
+
+# Membuat node 
+root = Node('A') 
+root.left = Node('B') 
+root.right = Node('C') 
+root.left.left = Node('D') 
+root.left.right = Node('E') 
+root.right.right = Node('F') 
+
+def preorder(node): 
+   if node: 
+       print(node.data, end=' ') 
+       preorder(node.left) 
+       preorder(node.right) 
+
+print("Preorder Traversal:") 
+preorder(root)
+
+def inorder(node): 
+    if node: 
+        inorder(node.left) 
+        print(node.data, end=' ') 
+        inorder(node.right)
+
+print("Inorder Traversal:") 
+inorder(root)
+
+def postorder(node): 
+    if node: 
+        postorder(node.left) 
+        postorder(node.right) 
+        print(node.data, end=' ')
+
+print("Postorder Traversal:") 
+postorder(root) 
+
+graph = { 
+'A': ['B', 'C'], 
+'B': ['A', 'C', 'D'], 
+'C': ['A', 'B', 'D'], 
+'D': ['B', 'C'] 
+} 
+
+def dfs_spanning_tree(graph, start): 
+    visited = set() 
+    spanning_tree = [] 
+
+    def dfs(u): 
+        visited.add(u) 
+        for v in graph[u]: 
+            if v not in visited: 
+                spanning_tree.append((u, v)) 
+                dfs(v) 
+                
+    dfs(start) 
+    return spanning_tree 
+
+
+tree = dfs_spanning_tree(graph, 'A') 
+print("Spanning Tree (DFS):") 
+print(tree) 
+
+[('A', 'B'), ('B', 'C'), ('C', 'D')] 
+
+from collections import deque 
+
+def bfs_spanning_tree(graph, start): 
+    visited = set([start]) 
+    queue = deque([start]) 
+    spanning_tree = [] 
+
+    while queue: 
+        u = queue.popleft() 
+        for v in graph[u]: 
+            if v not in visited: 
+                visited.add(v) 
+                queue.append(v) 
+                spanning_tree.append((u, v)) 
+
+    return spanning_tree
+
+tree = bfs_spanning_tree(graph, 'A') 
+print("Spanning Tree (BFS):") 
+print(tree)
